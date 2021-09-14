@@ -1,9 +1,8 @@
-import './App.css';
 import { useState } from 'react';
-import { Button } from '@material-ui/core';
-import RandomImageComponenet from './components/random-image/random-image.component';
-import ApprovedImages from './components/approved-images/approved-images.component';
+import RandomImageComponenet from './components/random-image/RandomImage';
+import ApprovedImages from './components/approved-images/ApprovedImages';
 import { connect } from 'react-redux';
+import AppStyles from './AppStyles';
 
 function App(params) {
     let [url, setUrl] = useState(null);
@@ -11,6 +10,7 @@ function App(params) {
     const approved = params.currentStore.imageReducer.approved;
     const rejected = params.currentStore.imageReducer.rejected;
     const endpoint = 'https://api.unsplash.com/photos/random/?client_id=Byd4R0--txY1qSmiK_hAVgNooi7bAW3NbxN2lFOfcyE';
+    const { Main, Buttons, Approve, Reject, Message } = AppStyles;
 
     const getNewImageFromApi = () => {
         fetch(endpoint)
@@ -43,25 +43,26 @@ function App(params) {
     }
 
     return (
-        <div className='main'>
+        <Main>
             <ApprovedImages approved={approved} />
             <RandomImageComponenet url={url} emit={getNewImage}/>
-            <div className='action-btn'>
-                <Button
+            <Buttons display={!!url ? 'block' : 'none'}>
+                <Message display={!url ? 'block' : 'none'}>
+                    Click on the + in order to get image recommendations
+                </Message>
+                <Reject
                     variant='contained'
-                    className='reject'
                     disabled={isLoading}
                     onClick={() => actionButtonClick('onReject', url)}
-                ></Button>
-                <Button
+                ></Reject>
+                <Approve
                     variant='contained'
                     color='primary'
-                    className='approve'
                     disabled={isLoading}
                     onClick={() => actionButtonClick('onApprove', url)}
-                ></Button>
-            </div>
-        </div>
+                ></Approve>
+            </Buttons>
+        </Main>
     );
 }
 
