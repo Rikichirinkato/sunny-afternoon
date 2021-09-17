@@ -6,8 +6,8 @@ function RandomImageComponenet({ url, emit }) {
         <RandomImageContainer>
             {
                 url
-                    ? <RandomImage src={url} alt=''></RandomImage>
-                    : <EmptyState onClick={emit}></EmptyState>}
+                    ? <RandomImage data-testid='random-picture' src={url} alt=''></RandomImage>
+                    : <EmptyState data-testid='empty-state' onClick={emit}></EmptyState>}
         </RandomImageContainer>
     )
 }
